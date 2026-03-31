@@ -1,16 +1,14 @@
-from openai import OpenAI
+from app.llm.transformers_qwen import LocalQwenLLM
 
-client = OpenAI(
-    base_url="http://localhost:8000/v1",
-    api_key="EMPTY",
-)
 
-resp = client.chat.completions.create(
-    model="/path/to/Qwen2.5-7B-Instruct",
-    messages=[
-        {"role": "user", "content": "Say hello in one short sentence."}
-    ],
-    temperature=0.2,
-)
+def main():
+    llm = LocalQwenLLM()
+    messages = [
+        {"role": "system", "content": "You are a concise assistant."},
+        {"role": "user", "content": "Say hello in one short sentence."},
+    ]
+    print(llm.chat(messages))
 
-print(resp.choices[0].message.content)
+
+if __name__ == "__main__":
+    main()
