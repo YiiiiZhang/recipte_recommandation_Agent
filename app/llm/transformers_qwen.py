@@ -39,7 +39,6 @@ class LocalQwenLLM(BaseLLM):
             generated_ids = self.model.generate(
                 **model_inputs,
                 max_new_tokens=settings.max_new_tokens,
-                temperature=settings.temperature,
                 do_sample=settings.do_sample,
             )
 
