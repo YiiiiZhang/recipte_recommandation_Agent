@@ -3,6 +3,5 @@
     "DEVICE_MAP": "auto",
     "MAX_NEW_TOKENS": 256,
     "TEMPERATURE": 0.2,
-    "DO_SAMPLE": false
-
+    "DO_SAMPLE": "False"
 }
