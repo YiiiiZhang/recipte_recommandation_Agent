@@ -3,17 +3,18 @@ from typing import List, Dict
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from app.config import settings
 from app.llm.base import BaseLLM
 from app.utils.logger import get_logger
 
+from utils.utils import read_json
+CONFIGS = read_json("./app/config.json")
 
 logger = get_logger(__name__)
 
 
 class LocalQwenLLM(BaseLLM):
     def __init__(self, model_path: str | None = None):
-        self.model_path = model_path or settings.model_path
+        self.model_path = model_path or CONFIGS.get("MODEL_PATH")
         logger.info("Loading tokenizer from %s", self.model_path)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
 
@@ -21,7 +22,7 @@ class LocalQwenLLM(BaseLLM):
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_path,
             torch_dtype="auto",
-            device_map=settings.device_map,
+            device_map=CONFIGS.get("DEVICE_MAP"),
         )
         self.model.eval()
         logger.info("Model loaded successfully.")
@@ -38,8 +39,9 @@ class LocalQwenLLM(BaseLLM):
         with torch.no_grad():
             generated_ids = self.model.generate(
                 **model_inputs,
-                max_new_tokens=settings.max_new_tokens,
-                do_sample=settings.do_sample,
+                max_new_tokens=CONFIGS.get("MAX_NEW_TOKENS"),
+                temperature=CONFIGS.get("TEMPERATURE"),
+                do_sample=CONFIGS.get("DO_SAMPLE"),
             )
 
         generated_ids = [
