@@ -1,8 +1,8 @@
 {
     "MODEL_PATH": "/dss/dssmcmlfs01/pn25ju/pn25ju-dss-0000/models/Qwen2.5-7B-Instruct",
     "DEVICE_MAP": "auto",
-    "MAX_NEW_TOKENS": "256",
-    "TEMPERATURE": "0.2",
-    "DO_SAMPLE": "false"
-    
+    "MAX_NEW_TOKENS": 256,
+    "TEMPERATURE": 0.2,
+    "DO_SAMPLE": false
+
 }
