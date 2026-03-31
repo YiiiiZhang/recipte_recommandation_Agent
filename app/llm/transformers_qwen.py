@@ -6,7 +6,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from app.llm.base import BaseLLM
 from app.utils.logger import get_logger
 
-from utils.utils import read_json
+import app.utils.utils as read_json
 CONFIGS = read_json("./app/config.json")
 
 logger = get_logger(__name__)
