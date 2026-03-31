@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MODEL_PATH="/dss/dssmcmll-fs01/pn25ju/pn25ju-dss-0000/models/Qwen2.5-7B-Instruct"
+MODEL_PATH="/dss/dssmcmlfs01/pn25ju/pn25ju-dss-0000/models/Qwen2.5-7B-Instruct"
 PORT="8000"
 API_KEY="EMPTY"
 LOG_FILE="vllm.log"
