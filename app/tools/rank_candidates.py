@@ -1,33 +1,40 @@
-from app.agent.schemas import UserIntent, Recipe
-from app.data.seed_recipes import SEED_RECIPES
+from app.agent.schemas import UserIntent, Recipe, RankedRecipe
 
 
-def _matches_constraints(recipe: Recipe, intent: UserIntent) -> bool:
-    if intent.meal_type and recipe.meal_type.lower() != intent.meal_type.lower():
-        return False
+def _score_recipe(recipe: Recipe, intent: UserIntent) -> tuple[float, str]:
+    score = 0.0
+    reasons = []
 
-    if intent.max_cook_time and recipe.cook_time_min > intent.max_cook_time:
-        return False
+    if intent.max_cook_time and recipe.cook_time_min <= intent.max_cook_time:
+        score += 0.25
+        reasons.append(f"ready in {recipe.cook_time_min} minutes")
 
-    if intent.max_calories and recipe.calories > intent.max_calories:
-        return False
+    if intent.max_calories and recipe.calories <= intent.max_calories:
+        score += 0.20
+        reasons.append(f"{recipe.calories} kcal fits your calorie target")
 
-    recipe_ingredients = {item.lower() for item in recipe.ingredients}
+    if intent.diet_goal == "high_protein" and recipe.protein_g >= 25:
+        score += 0.30
+        reasons.append(f"high in protein ({recipe.protein_g}g)")
 
-    for item in intent.excluded_ingredients:
-        if item.lower() in recipe_ingredients:
-            return False
+    preferred = {x.lower() for x in intent.preferred_ingredients}
+    ingredients = {x.lower() for x in recipe.ingredients}
+    overlap = preferred.intersection(ingredients)
+    if overlap:
+        score += 0.25
+        reasons.append(f"matches your preferred ingredients: {', '.join(sorted(overlap))}")
 
-    for item in intent.allergies:
-        if item.lower() in recipe_ingredients:
-            return False
+    if not reasons:
+        reasons.append("generally matches your request")
 
-    return True
+    return score, "; ".join(reasons)
 
 
-def retrieve_recipes(intent: UserIntent) -> list[Recipe]:
-    candidates = []
-    for recipe in SEED_RECIPES:
-        if _matches_constraints(recipe, intent):
-            candidates.append(recipe)
-    return candidates
+def rank_candidates(candidates: list[Recipe], intent: UserIntent) -> list[RankedRecipe]:
+    ranked = []
+    for recipe in candidates:
+        score, reason = _score_recipe(recipe, intent)
+        ranked.append(RankedRecipe(recipe=recipe, score=score, reason=reason))
+
+    ranked.sort(key=lambda x: x.score, reverse=True)
+    return ranked[:3]
