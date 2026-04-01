@@ -28,7 +28,7 @@ def main():
             print(f"allergies: {intent.allergies}")
             print(f"max_cook_time: {intent.max_cook_time}")
             print(f"max_calories: {intent.max_calories}")
-            print(f"response_language: {intent.response_language}")
+            print(f"detected_language: {intent.detected_language}")
 
             print("\n[Top Recommendations]")
             if not ranked:
