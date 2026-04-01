@@ -11,6 +11,7 @@ class UserIntent:
     allergies: List[str] = field(default_factory=list)
     max_cook_time: Optional[int] = None
     max_calories: Optional[int] = None
+    detected_language: str = "en"
 
 
 @dataclass

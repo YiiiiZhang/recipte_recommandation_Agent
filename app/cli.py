@@ -18,6 +18,7 @@ def main():
             result = agent.run(user_input)
             intent = result["intent"]
             ranked = result["ranked_results"]
+            explanation = result["explanation"]
 
             print("\n[Parsed Intent]")
             print(f"meal_type: {intent.meal_type}")
@@ -27,6 +28,7 @@ def main():
             print(f"allergies: {intent.allergies}")
             print(f"max_cook_time: {intent.max_cook_time}")
             print(f"max_calories: {intent.max_calories}")
+            print(f"response_language: {intent.response_language}")
 
             print("\n[Top Recommendations]")
             if not ranked:
@@ -42,8 +44,10 @@ def main():
                 print(f"   calories: {recipe.calories} kcal")
                 print(f"   protein: {recipe.protein_g} g")
                 print(f"   ingredients: {', '.join(recipe.ingredients)}")
-                print(f"   why: {item.reason}")
+                print(f"   rule-based why: {item.reason}")
 
+            print("\n[LLM Explanation]")
+            print(explanation)
             print()
 
         except Exception as e:

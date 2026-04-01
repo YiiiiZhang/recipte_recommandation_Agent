@@ -31,4 +31,5 @@ def parse_user_request(user_query: str, llm: BaseLLM) -> UserIntent:
         allergies=data.get("allergies", []),
         max_cook_time=data.get("max_cook_time"),
         max_calories=data.get("max_calories"),
+        detected_language=data.get("detected_language", "en"),
     )
