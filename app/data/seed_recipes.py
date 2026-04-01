@@ -1,0 +1,53 @@
+from app.agent.schemas import Recipe
+
+
+SEED_RECIPES = [
+    Recipe(
+        recipe_id="r1",
+        title="Garlic Chicken Broccoli Bowl",
+        cuisine="American",
+        meal_type="dinner",
+        ingredients=["chicken", "broccoli", "garlic", "rice"],
+        cook_time_min=20,
+        calories=480,
+        protein_g=35,
+        tags=["high_protein", "quick"],
+        summary="A quick high-protein dinner with chicken and broccoli.",
+    ),
+    Recipe(
+        recipe_id="r2",
+        title="Vegetarian Tomato Pasta",
+        cuisine="Italian",
+        meal_type="lunch",
+        ingredients=["pasta", "tomato", "garlic", "olive oil"],
+        cook_time_min=25,
+        calories=520,
+        protein_g=14,
+        tags=["vegetarian"],
+        summary="A simple vegetarian pasta with tomato sauce.",
+    ),
+    Recipe(
+        recipe_id="r3",
+        title="Chicken Egg Fried Cauliflower Rice",
+        cuisine="Asian",
+        meal_type="dinner",
+        ingredients=["chicken", "egg", "cauliflower", "soy sauce"],
+        cook_time_min=18,
+        calories=390,
+        protein_g=32,
+        tags=["high_protein", "low_carb"],
+        summary="A light and high-protein dinner using chicken and cauliflower rice.",
+    ),
+    Recipe(
+        recipe_id="r4",
+        title="Peanut Noodle Salad",
+        cuisine="Asian",
+        meal_type="lunch",
+        ingredients=["noodles", "peanut", "cucumber", "soy sauce"],
+        cook_time_min=15,
+        calories=430,
+        protein_g=12,
+        tags=["quick"],
+        summary="A cold noodle salad with peanut dressing.",
+    ),
+]

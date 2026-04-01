@@ -11,3 +11,24 @@ class UserIntent:
     allergies: List[str] = field(default_factory=list)
     max_cook_time: Optional[int] = None
     max_calories: Optional[int] = None
+
+
+@dataclass
+class Recipe:
+    recipe_id: str
+    title: str
+    cuisine: str
+    meal_type: str
+    ingredients: List[str]
+    cook_time_min: int
+    calories: int
+    protein_g: int
+    tags: List[str]
+    summary: str
+
+
+@dataclass
+class RankedRecipe:
+    recipe: Recipe
+    score: float
+    reason: str
